@@ -22,12 +22,13 @@ public class TourService {
                            String description, String blurb, Integer price, String duration,
                            String bullets, String keywords, Difficulty difficulty, Region region) {
 
-        TourPackage tourPackage = null;
-        return new Tour(title, description, blurb,
-                price, duration, bullets, keywords, tourPackage, difficulty, region);
+        TourPackage tourPackage = tourPackageRepository.findByName(tourPackageName)
+                .orElseThrow(()-> new RuntimeException("Tour pachege not found id "+ tourPackageName));
+        return  tourRepository.save(new Tour(title, description, blurb,
+                price, duration, bullets, keywords, tourPackage, difficulty, region)) ;
     }
 
     public long total() {
-        return 0;
+        return tourRepository.count();
     }
 }
