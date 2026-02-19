@@ -8,6 +8,8 @@ import com.example.exporecalijpa.repository.TourPackageRepository;
 import com.example.exporecalijpa.repository.TourRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TourService {
     private TourPackageRepository tourPackageRepository;
@@ -26,6 +28,14 @@ public class TourService {
                 .orElseThrow(()-> new RuntimeException("Tour pachege not found id "+ tourPackageName));
         return  tourRepository.save(new Tour(title, description, blurb,
                 price, duration, bullets, keywords, tourPackage, difficulty, region)) ;
+    }
+
+    public List<Tour> lookUpDifficulty(Difficulty difficulty){
+        return tourRepository.findByDifficulty(difficulty);
+    }
+
+    public List<Tour> lookUpDifficultyCode(String code){
+        return tourRepository.findByTourPackageCode(code);
     }
 
     public long total() {
